@@ -1,5 +1,7 @@
 package base;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,11 +13,14 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
 import org.testng.annotations.*;
 import sun.management.counter.Units;
+import utility.ExtentReportManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +31,24 @@ import java.util.concurrent.TimeUnit;
  */
 public class CommonAPI {
 
+    public static ExtentHtmlReporter extent;
     public static WebDriver driver = null;
     private String saucelabs_username = "your user name";
     private String browserstack_username = "your user name";
     private String saucelabs_accesskey = "your access key";
     private String browserstack_accesskey = "your access key";
+
+    @BeforeSuite
+    public void extentSetUp(ITestContext context){
+        ExtentReportManager.setOutputDirectory(context);
+        extent = ExtentReportManager.getInstance();
+    }
+
+    @BeforeMethod
+    public void startExtent(Method method){
+        String className = method.getDeclaringClass().getSimpleName();
+        String methodName = method.getName().toLowerCase();
+    }
 
     @Parameters({"useCloudEnv","cloudEnvName","os","os_version","browserName","browserVersion","url"})
     @BeforeMethod

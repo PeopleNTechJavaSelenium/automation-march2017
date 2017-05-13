@@ -10,7 +10,7 @@ import org.openqa.selenium.support.How;
  */
 public class HomePage extends CommonAPI {
 
-    @FindBy(how = How.CSS, using = "#nav-wrapper .container #page-nav .nav-links .nav-links-wrapper .nav-left #sections .menu-icon svg:only-child")
+    @FindBy(how = How.CSS, using = ".nav-left #sections span.menu-icon svg:only-child")
     public static WebElement sectionsMenu;
 
     @FindBy(how = How.CSS, using = "#menu-main-menu li:nth-child(1)")
